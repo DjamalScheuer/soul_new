@@ -51,7 +51,7 @@ class _SwipeViewState extends State<SwipeView> {
               //Add the next card
               if (counter <= 20) {
                 _cardController.addItem(CardView(
-                    text: "Do you like Card $counter?",
+                    text: "Do you like Card $counter???",
                     image: "assets/image_1.jpg"));
                 counter++;
               }
