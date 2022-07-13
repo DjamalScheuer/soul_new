@@ -1,11 +1,11 @@
-import 'swipe/bottom_buttons_row.dart';
-import 'swipe/card_overlay.dart';
-import 'swipe/example_card.dart';
-import 'swipe/general_drawer.dart';
+import 'bottom_buttons_row.dart';
+import 'card_overlay.dart';
+import 'example_card.dart';
+import 'fade_route.dart';
+import 'general_drawer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:swipable_stack/swipable_stack.dart';
-
 
 const _images = [
   'assets/image_5.jpg',
@@ -13,17 +13,27 @@ const _images = [
   'assets/image_4.jpg',
 ];
 
-class SwipeView extends StatefulWidget {
-  const SwipeView({super.key});
+class IgnoreVerticalSwipeExample extends StatefulWidget {
+  const IgnoreVerticalSwipeExample._();
+
+  static Route<void> route() {
+    return FadeRoute(
+      builder: (context) => const IgnoreVerticalSwipeExample._(),
+    );
+  }
 
   @override
-  _SwipeViewState createState() => _SwipeViewState();
+  _IgnoreVerticalSwipeExampleState createState() =>
+      _IgnoreVerticalSwipeExampleState();
 }
 
-class _SwipeViewState extends State<SwipeView> {
+class _IgnoreVerticalSwipeExampleState
+    extends State<IgnoreVerticalSwipeExample> {
   late final SwipableStackController _controller;
 
-  void _listenController() => setState(() {});
+  void _listenController() {
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -43,47 +53,51 @@ class _SwipeViewState extends State<SwipeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BasicExample'),
+        title: const Text('IgnoreVerticalSwipeExample'),
       ),
       drawer: const GeneralDrawer(),
       body: SafeArea(
-        top: false,
         child: Stack(
           children: [
             Positioned.fill(
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: SwipableStack(
-                  detectableSwipeDirections: const {
-                    SwipeDirection.right,
-                    SwipeDirection.left,
-                  },
                   controller: _controller,
                   stackClipBehaviour: Clip.none,
+                  allowVerticalSwipe: false,
+                  onWillMoveNext: (index, swipeDirection) {
+                    // Return true for the desired swipe direction.
+                    switch (swipeDirection) {
+                      case SwipeDirection.left:
+                      case SwipeDirection.right:
+                        return true;
+                      case SwipeDirection.up:
+                      case SwipeDirection.down:
+                        return false;
+                    }
+                  },
                   onSwipeCompleted: (index, direction) {
                     if (kDebugMode) {
                       print('$index, $direction');
                     }
                   },
                   horizontalSwipeThreshold: 0.8,
-                  verticalSwipeThreshold: 0.8,
+                  // Set max value to ignore vertical threshold.
+                  verticalSwipeThreshold: 1,
+                  overlayBuilder: (
+                    context,
+                    properties,
+                  ) =>
+                      CardOverlay(
+                    swipeProgress: properties.swipeProgress,
+                    direction: properties.direction,
+                  ),
                   builder: (context, properties) {
                     final itemIndex = properties.index % _images.length;
-
-                    return Stack(
-                      children: [
-                        ExampleCard(
-                          name: 'Sample No.${itemIndex + 1}',
-                          assetPath: _images[itemIndex],
-                        ),
-                        // more custom overlay possible than with overlayBuilder
-                        if (properties.stackIndex == 0 &&
-                            properties.direction != null)
-                          CardOverlay(
-                            swipeProgress: properties.swipeProgress,
-                            direction: properties.direction!,
-                          )
-                      ],
+                    return ExampleCard(
+                      name: 'Sample No.${itemIndex + 1}',
+                      assetPath: _images[itemIndex],
                     );
                   },
                 ),

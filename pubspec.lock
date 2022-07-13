@@ -183,6 +183,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  cupertino_progress_bar:
+    dependency: "direct main"
+    description:
+      name: cupertino_progress_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   dbus:
     dependency: transitive
     description:
@@ -754,6 +761,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.2"
+  sprung:
+    dependency: transitive
+    description:
+      name: sprung
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   sqflite:
     dependency: transitive
     description:
@@ -824,6 +838,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.33"
+  swipable_stack:
+    dependency: "direct main"
+    description:
+      name: swipable_stack
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   swipeable_card_stack:
     dependency: "direct main"
     description:

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
+//import 'app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'profile_view.dart';
 import 'contact_view.dart';
@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
-              SwipeView(title: 'Soul'),
+              SwipeView(),
               ProfileView(),
               ContactView(client: client, channel: channel),
               ChatView(client: client, channel: channel),//ContactView(),
